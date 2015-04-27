@@ -12,7 +12,7 @@ tor, torsock, redsocks
   local_port = 12345;
   ip = 127.0.0.1;
   port = 9050;
- } ```
+ }
 
 invocation: tor-router.sh [start|stop|start_router|stop_router]
 
