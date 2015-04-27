@@ -1,6 +1,8 @@
 #tor-router.sh
 transparent TOR-proxy capable of serving a subnet.
+
 Danja Vasiliev | http://k0a1a.net |  2015 | Artistic License 2.0
+
 
 requirements (debian):
 tor, torsock, redsocks
