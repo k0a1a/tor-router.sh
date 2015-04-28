@@ -1,10 +1,10 @@
 #tor-router.sh
-transparent Tor router capable of serving a subnet.
+Transparent Tor router capable of serving a subnet.
 
-requirements (debian):
-tor, torsock, redsocks
+Requirements (Debian, Ubuntu and variants):
+```sudo apt-get install tor torsock redsocks```
 
-/etc/redsocks.conf:
+edit /etc/redsocks.conf:
 ```
  redsocks {
   local_ip = 0.0.0.0;
