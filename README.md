@@ -1,5 +1,5 @@
 #tor-router.sh
-transparent TOR router capable of serving a subnet.
+transparent Tor router capable of serving a subnet.
 
 requirements (debian):
 tor, torsock, redsocks
