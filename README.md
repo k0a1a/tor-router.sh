@@ -1,7 +1,5 @@
 #tor-router.sh
-transparent TOR-proxy capable of serving a subnet.
-
-Danja Vasiliev | http://k0a1a.net |  2015 | Artistic License 2.0
+transparent TOR router capable of serving a subnet.
 
 requirements (debian):
 tor, torsock, redsocks
@@ -17,3 +15,5 @@ tor, torsock, redsocks
  ```
 invocation: tor-router.sh [start|stop|start_router|stop_router]
 
+
+Danja Vasiliev | http://k0a1a.net |  2015 | Artistic License 2.0
