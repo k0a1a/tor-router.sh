@@ -17,9 +17,16 @@ Edit /etc/redsocks.conf:
  
 To have your connection exit in a particular countr(yi|ies) add the following line to /etc/tor/torrc:
  
- ```ExitNodes {se},{br}```
+ ```
+ ExitNodes {se},{br}
+ StrictNodes 1
+ ```
  
-Invocation: tor-router.sh [start|stop|start_router|stop_router]
+Invocation: tor-router.sh [start|start_router|stop]
+
+*start* - start system-wide traffic redirection Tor)
+*start_router* - start router, acting as a gateway to the Internet (via Tor)
+*stop* - stop tor-router
 
 
 Danja Vasiliev | http://k0a1a.net |  2015 | Artistic License 2.0
