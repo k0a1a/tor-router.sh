@@ -17,7 +17,7 @@
 
 if [[ $EUID -ne 0 ]]; then
 	echo 'You must be root' 1>&2
-  su -c "$0" root
+  su -c "$0 $1" root  
   exit
 fi
 
