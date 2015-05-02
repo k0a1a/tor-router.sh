@@ -22,11 +22,14 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 ## the following used only in 'router' mode
-LOCAL_NIC='eth0' 
+LOCAL_NIC='eth1' 
 LOCAL_IP='10.4.5.0/24'
 LOCAL_RANGE='100-110'
 
 start_me() {
+  service tor restart && pidof tor >/dev/null || { echo 'Tor is not running!'; exit 1; }
+  service redsocks restart && pidof redsocks >/dev/null || { echo 'Redsocks is not running!'; exit 1; }
+
 	## make REDSOCKS chain
 	iptables -t nat -N REDSOCKS
 	## exclude reserved addresses
@@ -46,6 +49,7 @@ start_me() {
 }
 
 start_router() {
+  ifconfig $LOCAL_NIC || exit 1
 	start_me
 	sleep 1
 	ifconfig $LOCAL_NIC ${LOCAL_IP//.0/.1} up
@@ -65,19 +69,16 @@ stop_me() {
 	## flush and delete REDSOCKS chain
 	iptables -t nat -F REDSOCKS
 	iptables -t nat -X REDSOCKS
-}
-
-stop_router() {
-	stop_me
 	echo 0 > /proc/sys/net/ipv4/ip_forward
+  [ -e /var/run/dnsmasq.pid ] &&
 	kill $(cat /var/run/dnsmasq.pid) && rm /var/run/dnsmasq.pid
-	ifconfig $LOCAL_NIC down
+	[ -z $(ifconfig $LOCAL_NIC &>/dev/null| awk '/UP/') ] || ifconfig $LOCAL_NIC down
 }
 
 myip() {
   ## get our external ip address by asking http://wtfismyip.com
   (which geoiplookup && which curl) &>/dev/null || exit
-  read -d '$\n' IP ERR < <(curl -sL -w "%{http_code}" --connect-timeout 5 http://ipv4.wtfismyip.com/text)
+  read -d '$\n' IP ERR < <(curl -sL -w "\n%{http_code}" --connect-timeout 5 http://ipv4.wtfismyip.com/test)
   [[ $ERR == "200" ]] && {
     echo -e "\n$IP";
     geoiplookup $IP | awk '/Country/ { print $4, $5, $6 }';
@@ -104,14 +105,8 @@ case "$1" in
 		sleep 1
 		myip
 		;;
-	stop_router)
-		echo 'stopping router..'
-		stop_router
-		sleep 1
-		myip
-		;;
 	*)
-		echo 'Usage: tor-router.sh [start|stop|start_router|stop_router]'
+		echo 'Usage: tor-router.sh [start|start_router|stop]'
 		exit 1
 	;;
 esac 
