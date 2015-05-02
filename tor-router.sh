@@ -76,7 +76,7 @@ stop_router() {
 myip() {
   ## get our external ip address by asking http://wtfismyip.com
   (which geoiplookup && which curl) &>/dev/null || exit
-  read IP ERR < <(curl -sL -w " %{http_code}\\n" --connect-timeout 5 http://ipecho.net/plain)
+  read -d '$\n' IP ERR < <(curl -sL -w "%{http_code}" --connect-timeout 5 http://ipv4.wtfismyip.com/text)
   [[ $ERR == "200" ]] && {
     echo -e "\n$IP";
     geoiplookup $IP | awk '/Country/ { print $4, $5, $6 }';
