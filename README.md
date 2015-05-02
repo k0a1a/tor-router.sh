@@ -2,7 +2,8 @@
 Transparent Tor router capable of serving a subnet.
 
 Requirements (Debian, Ubuntu and variants):
-```sudo apt-get install tor torsock redsocks```
+
+```sudo apt-get install tor torsock redsocks geoip-bin geoip-database```
 
 Edit /etc/redsocks.conf:
 ```
@@ -11,8 +12,12 @@ Edit /etc/redsocks.conf:
   local_port = 12345;
   ip = 127.0.0.1;
   port = 9050;
- }
- ```
+ }```
+ 
+To have your connection exit in a particular countr(yi|ies) add the following line to /etc/tor/torrc:
+ 
+ ```ExitNodes {se},{br}```
+ 
 Invocation: tor-router.sh [start|stop|start_router|stop_router]
 
 
