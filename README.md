@@ -12,7 +12,8 @@ Edit /etc/redsocks.conf:
   local_port = 12345;
   ip = 127.0.0.1;
   port = 9050;
- }```
+ } 
+ ```
  
 To have your connection exit in a particular countr(yi|ies) add the following line to /etc/tor/torrc:
  
