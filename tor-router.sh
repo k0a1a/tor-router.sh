@@ -16,8 +16,9 @@
 ## invocation: tor-router.sh [start|stop|start_router|stop_router]
 
 if [[ $EUID -ne 0 ]]; then
-	echo 'you must be root' 1>&2
-	exit 1
+	echo 'You must be root' 1>&2
+  su -c "$0" root
+  exit
 fi
 
 ## the following used only in 'router' mode
